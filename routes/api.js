@@ -6,6 +6,7 @@ const csv = require("csv-parse");
 require("dotenv").config();
 var employeeService = require("../services/Employee");
 var { saveFile } = require("../routes/Utils");
+const path = require("path");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -17,7 +18,9 @@ router.get("/files/download", async (req, res, next) => {
   if(type.toLowerCase() === "profile"){
     let employee = await employeeService.getEmployeeOnEmpNo(reference);
     if(employee){
-      let imagePath = employee.profileImagePath;
+      let fileName = employee.profileImageName;
+      let imagePath = path.join(process.env.FileSavePath, pathExtention, fileName)
+      console.log(imagePath);
       res.download(imagePath)
     }else {
       APIERROR(res, "No File Found");
