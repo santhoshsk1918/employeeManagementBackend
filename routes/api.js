@@ -19,7 +19,7 @@ router.get("/files/download", async (req, res, next) => {
     let employee = await employeeService.getEmployeeOnEmpNo(reference);
     if(employee){
       let fileName = employee.profileImageName;
-      let imagePath = path.join(process.env.FileSavePath, pathExtention, fileName)
+      let imagePath = path.join(process.env.FileSavePath, "Profile", fileName)
       console.log(imagePath);
       res.download(imagePath)
     }else {
